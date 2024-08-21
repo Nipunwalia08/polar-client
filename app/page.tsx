@@ -191,6 +191,7 @@ const handleFacebookLogin = () => {
     window.FB.login(
       (response: FB.StatusResponse) => {
         if (response.authResponse) {
+          console.log(response)
           console.log('Welcome! Fetching your information...');
           window.FB.api('/me', { fields: 'name,email' }, (userInfo: any) => {
             console.log(userInfo);
