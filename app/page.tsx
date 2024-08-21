@@ -148,7 +148,8 @@ const SignIn: React.FC = () => {
   };
 
 
-  const initializeFacebookSdk = () => {
+  const initializeFacebookSdk = (): Promise<void> => {
+  return new Promise((resolve) => {
     window.fbAsyncInit = function () {
       window.FB.init({
         appId: 'your-app-id', // Replace with your Facebook App ID
@@ -156,10 +157,11 @@ const SignIn: React.FC = () => {
         xfbml: true,
         version: 'v12.0',
       });
-  
+
       window.FB.AppEvents.logPageView();
+      resolve();
     };
-  
+
     // Load the SDK asynchronously
     (function (d, s, id) {
       let js: HTMLScriptElement;
@@ -172,37 +174,42 @@ const SignIn: React.FC = () => {
       js.src = 'https://connect.facebook.net/en_US/sdk.js';
       fjs.parentNode!.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
-  };
-  // Facebook login
+  });
+};
   useEffect(() => {
-    initializeFacebookSdk();
-  }, []);
-
-  
-  const handleFacebookLogin = () => {
-    if (typeof window !== 'undefined' && typeof window.FB !== 'undefined') {
-      window.FB.login(
-        (response: FB.StatusResponse) => {
-          if (response.authResponse) {
-            console.log('Welcome! Fetching your information...');
-            window.FB.api('/me', { fields: 'name,email' }, (userInfo: any) => {
-              console.log(userInfo);
-              toast.success(`Logged in as ${userInfo.name}`);
-              // Perform your login logic here
-              navigate.push('/dashboard');
-            });
-          } else {
-            console.log('User cancelled login or did not fully authorize.');
-            toast.error('Facebook login failed');
-          }
-        },
-        { scope: 'public_profile,email' }
-      );
-    } else {
-      console.error('Facebook SDK is not loaded');
-      toast.error('Facebook SDK is not loaded');
-    }
+  const initFacebook = async () => {
+    await initializeFacebookSdk();
+    setFacebookReady(true);
   };
+  initFacebook();
+}, []);
+
+const [facebookReady, setFacebookReady] = useState(false);
+
+const handleFacebookLogin = () => {
+  if (typeof window !== 'undefined' && typeof window.FB !== 'undefined' && facebookReady) {
+    window.FB.login(
+      (response: FB.StatusResponse) => {
+        if (response.authResponse) {
+          console.log('Welcome! Fetching your information...');
+          window.FB.api('/me', { fields: 'name,email' }, (userInfo: any) => {
+            console.log(userInfo);
+            toast.success(`Logged in as ${userInfo.name}`);
+            // Perform your login logic here
+            navigate.push('/dashboard');
+          });
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+          toast.error('Facebook login failed');
+        }
+      },
+      { scope: 'public_profile,email' }
+    );
+  } else {
+    console.error('Facebook SDK is not loaded');
+    toast.error('Facebook SDK is not loaded');
+  }
+};
   
 
   return (
