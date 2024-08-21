@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--theme-color: linear-gradient(270deg, #211aeb 0%, #7c36fe 100%);
+}
+
+@layer utilities {
+	.text-balance {
+		text-wrap: balance;
+	}
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #d1d1d1;
+	border-radius: 4px;
+}
+
+/* Hide scrollbar while still scrollable */
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+
+/* Add transitions for background-color and color */
+.selected {
+	transition: all 0.3s ease, color 0.3s ease;
+}
+
+input,
+textarea {
+	background-color: inherit;
+	outline: none;
+}
+
+@keyframes spin {
+	0% {
+		rotate: 0deg;
+	}
+	20% {
+		rotate: 60deg;
+	}
+	40% {
+		rotate: 180deg;
+	}
+	60% {
+		rotate: 240deg;
+	}
+	80% {
+		rotate: 300deg;
+	}
+	100% {
+		rotate: 360deg;
+	}
+}
+
+.loader {
+	border-radius: 50%;
+	border-top: 3px solid white;
+	width: 20px;
+	height: 20px;
+	animation: spin 1s linear infinite forwards;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
