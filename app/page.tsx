@@ -153,7 +153,6 @@ const SignIn: React.FC = () => {
     window.fbAsyncInit = function () {
       window.FB.init({
         appId            : '1035411700904033',
-        autoLogAppEvents : true,
         xfbml            : true,
         version          : 'v20.0',
         cookie: true,
