@@ -152,10 +152,11 @@ const SignIn: React.FC = () => {
   return new Promise((resolve) => {
     window.fbAsyncInit = function () {
       window.FB.init({
-        appId: 'your-app-id', // Replace with your Facebook App ID
+        appId            : '1035411700904033',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v20.0',
         cookie: true,
-        xfbml: true,
-        version: 'v12.0',
       });
 
       window.FB.AppEvents.logPageView();
