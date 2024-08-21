@@ -1,13 +1,13 @@
-// import React from 'react'
+import React from 'react'
 
-// import TemplateTable from '@components/ISV/TemplateTable'
+import TemplateTable from '@components/ISV/TemplateTable'
 
-// const page = () => {
-//   return (
-//     <div>
-//       <TemplateTable/>
-//     </div>
-//   )
-// }
+const page = () => {
+  return (
+    <div>
+      <TemplateTable/>
+    </div>
+  )
+}
 
-// export default page
+export default page
